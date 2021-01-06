@@ -25,6 +25,7 @@ class UserFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         return queryset.filter(user=request.user)
 
+
 @method_decorator(name='get', decorator=swagger_auto_schema(operation_description='Filtering by log in user'))
 class ListHobbyView(ListAPIView):
     """

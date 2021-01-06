@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView
 from .models import Post, Post_Pic
-from .serializers import PostSerializer, LikeSerializer, PostPicSerializer, FolloweesSerilizer
+from .serializers import PostSerializer, LikeSerializer, PostPicSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -82,7 +82,6 @@ class LikePost(generics.UpdateAPIView):
     def perform_update(self, serializer):
         post = self.get_object()
         user = self.request.user
-        requester = Post.user
         # TODO check if the post was liked by this user already
         user_liked_post = user in post.liked_by.all()
         if user_liked_post:
