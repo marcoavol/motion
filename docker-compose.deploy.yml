@@ -1,0 +1,38 @@
+# https://docs.docker.com/compose/compose-file/
+
+version: '3'
+
+services:
+  backend:
+    image: backend:latest
+    restart: always
+    command: 'sh /scripts/prod.sh'
+    env_file:
+      - ./envs/prod.env
+    volumes:
+      - static-files:/static-files
+      - media-files:/media-files
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest  # Should use a fixed version in prod instead of latest?
+    env_file:
+      - ./envs/prod.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest  # Should use a fixed version in prod instead of latest?
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx:/etc/nginx/default.conf
+      - static-files:/static-files
+      - media-files:/media-files
+
+volumes:
+  postgres:
+  static-files:
+  media-files:
