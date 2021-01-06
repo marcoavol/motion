@@ -17,5 +17,3 @@ class FriendRequestAdmin(admin.ModelAdmin):
     list_filter = ['requester', 'receiver', 'status']
 
     ordering = ['requester']
-
-

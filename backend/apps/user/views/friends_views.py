@@ -61,4 +61,3 @@ class RetrieveUpdateDestroyFriendRequestView(generics.RetrieveUpdateDestroyAPIVi
     serializer_class = FriendRequestSerializer
     lookup_url_kwarg = 'friend_request_id'
     permission_classes = [IsInvolved]
-

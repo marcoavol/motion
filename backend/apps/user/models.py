@@ -35,7 +35,6 @@ class User(AbstractUser):
     # requested = ForeignKey field defined in FriendRequest model
     # received = ForeignKey field defined in FriendRequest model
 
-
     def friends(self):
         requested = [request['receiver_id'] for request in
                      self.requested.filter(status=FriendRequest.ACCEPTED_STATUS).values()]

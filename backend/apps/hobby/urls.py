@@ -1,8 +1,7 @@
 from django.urls import path
-from . import views
-
+from .views import ListHobbyView, ListAllHobbyViewFilterPath
 
 urlpatterns = [
-    path('', views.ListHobbyView.as_view()),
-    path('all/', views.ListAllHobbyViewFilterPath.as_view()),
+    path('', ListHobbyView.as_view()),
+    path('all/', ListAllHobbyViewFilterPath.as_view()),
 ]

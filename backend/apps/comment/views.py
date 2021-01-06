@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import ListCreateAPIView, ListAPIView
