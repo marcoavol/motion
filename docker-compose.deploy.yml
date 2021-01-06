@@ -4,7 +4,7 @@ version: '3'
 
 services:
   backend:
-    image: backend:latest
+    image: registry.gitlab.propulsion-home.ch/marco/week-7-docker-and-backend-assignment/day-3-gitlab-and-deployment:latest
     restart: always
     command: 'sh /scripts/prod.sh'
     env_file:

@@ -12,3 +12,4 @@ dependencies:
     - markdown==3.3.3
     - pillow==8.0.1
     - gunicorn==20.0.4
+    - flake8==3.8.4
