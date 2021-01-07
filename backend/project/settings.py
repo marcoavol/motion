@@ -26,7 +26,7 @@ SECRET_KEY = 'pixpje9yq_2a2h6m2b766gq(^0#&69cak-e&!*#mziqay98o!3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ast.literal_eval(os.getenv('DJANGO_DEBUG'))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['138.68.96.201', 'mv-docker-deployment.propulsion-learn.ch']
 
 # Application definition
 INSTALLED_APPS = [
