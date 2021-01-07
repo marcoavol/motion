@@ -8,10 +8,12 @@ services:
     restart: always
     ports:
       - '80:80'
+      - '443:443'
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - static-files:/static-files
       - media-files:/media-files
+      - /etc/letsencrypt:/etc/letsencrypt
 
   backend:
     image: registry.gitlab.propulsion-home.ch/marco/week-7-docker-and-backend-assignment/day-3-gitlab-and-deployment:latest
