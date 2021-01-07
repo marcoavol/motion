@@ -3,6 +3,16 @@
 version: '3'
 
 services:
+  nginx:
+    image: nginx:latest  # Should use a fixed version in prod instead of latest?
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static-files:/static-files
+      - media-files:/media-files
+
   backend:
     image: registry.gitlab.propulsion-home.ch/marco/week-7-docker-and-backend-assignment/day-3-gitlab-and-deployment:latest
     restart: always
@@ -21,16 +31,6 @@ services:
       - ./envs/prod.env
     volumes:
       - postgres:/var/lib/postgresql/data
-
-  nginx:
-    image: nginx:latest  # Should use a fixed version in prod instead of latest?
-    restart: always
-    ports:
-      - '80:80'
-    volumes:
-      - ./nginx:/etc/nginx/default.conf
-      - static-files:/static-files
-      - media-files:/media-files
 
 volumes:
   postgres:
