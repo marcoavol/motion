@@ -3,4 +3,3 @@ db.sqlite3
 ../envs/.env
 __pycache__/
 media/
-postman/
