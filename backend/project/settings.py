@@ -13,7 +13,6 @@ import os
 import ast
 from pathlib import Path
 from _datetime import timedelta
-import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +27,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = ast.literal_eval(os.getenv('DJANGO_DEBUG'))
 
 # SECURITY WARNING: restrict allowed hosts in production!
-ALLOWED_HOSTS = json.loads(os.getenv('ALLOWED_HOSTS'))
+PRODUCTION_HOSTS = [
+    '138.68.96.201',
+    'mv-docker-deployment.propulsion-learn.ch',
+    'www.mv-docker-deployment.propulsion-learn.ch',
+]
+ALLOWED_HOSTS = PRODUCTION_HOSTS if DEBUG else ['*']
 
 # Application definition
 INSTALLED_APPS = [
