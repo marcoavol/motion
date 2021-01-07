@@ -13,6 +13,7 @@ import os
 import ast
 from pathlib import Path
 from _datetime import timedelta
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,17 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pixpje9yq_2a2h6m2b766gq(^0#&69cak-e&!*#mziqay98o!3'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ast.literal_eval(os.getenv('DJANGO_DEBUG'))
 
-# TODO: In dev allow any => ['*']
-ALLOWED_HOSTS = [
-    '138.68.96.201',
-    'mv-docker-deployment.propulsion-learn.ch',
-    'www.mv-docker-deployment.propulsion-learn.ch',
-]
+# SECURITY WARNING: restrict allowed hosts in production!
+ALLOWED_HOSTS = json.loads(os.getenv('ALLOWED_HOSTS'))
 
 # Application definition
 INSTALLED_APPS = [
@@ -90,11 +87,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        "PORT": os.environ.get('POSTGRES_PORT'),
-        "HOST": os.environ.get('POSTGRES_HOST'),
-        "USER": os.environ.get('POSTGRES_USER'),
-        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        "PORT": os.getenv('POSTGRES_PORT'),
+        "HOST": os.getenv('POSTGRES_HOST'),
+        "USER": os.getenv('POSTGRES_USER'),
+        "PASSWORD": os.getenv('POSTGRES_PASSWORD'),
     }
 }
 
@@ -176,9 +173,9 @@ SWAGGER_SETTINGS = {
 # Sensitive information must be stored in gitignored .env file (see requirements.yml for required python-dotenv version)
 # https://pypi.org/project/python-dotenv/
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
