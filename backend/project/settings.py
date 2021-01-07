@@ -27,7 +27,11 @@ SECRET_KEY = 'pixpje9yq_2a2h6m2b766gq(^0#&69cak-e&!*#mziqay98o!3'
 DEBUG = ast.literal_eval(os.getenv('DJANGO_DEBUG'))
 
 # TODO: In dev allow any => ['*']
-ALLOWED_HOSTS = ['138.68.96.201', 'mv-docker-deployment.propulsion-learn.ch']
+ALLOWED_HOSTS = [
+    '138.68.96.201',
+    'mv-docker-deployment.propulsion-learn.ch',
+    'www.mv-docker-deployment.propulsion-learn.ch'
+]
 
 # Application definition
 INSTALLED_APPS = [
