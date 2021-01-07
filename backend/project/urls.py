@@ -36,33 +36,35 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,)  # Permissions for docs access
 )
 
-urlpatterns = [
-    # Admin
-    path('admin/', admin.site.urls),
-
+api_patterns = [
     # Documentation
-    path('backend/api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     # Authentication
-    path('backend/api/auth/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('backend/api/auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('backend/api/auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh'),
-    path('backend/api/auth/registration/', include('apps.registration_profile.urls.registration_urls')),
-    path('backend/api/auth/password-reset/', include('apps.registration_profile.urls.password_reset_urls')),
+    path('auth/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh'),
+    path('auth/registration/', include('apps.registration_profile.urls.registration_urls')),
+    path('auth/password-reset/', include('apps.registration_profile.urls.password_reset_urls')),
 
     # User
-    path('backend/api/users/', include('apps.user.urls.users_urls')),
-    path('backend/api/social/followers/', include('apps.user.urls.followers_urls')),
-    path('backend/api/social/friends/', include('apps.user.urls.friends_urls')),
+    path('users/', include('apps.user.urls.users_urls')),
+    path('social/followers/', include('apps.user.urls.followers_urls')),
+    path('social/friends/', include('apps.user.urls.friends_urls')),
 
     # Hobby
-    path('backend/api/hobbies/', include('apps.hobby.urls')),
+    path('hobbies/', include('apps.hobby.urls')),
 
     # Post
-    path('backend/api/social/posts/', include('apps.post.urls')),
+    path('social/posts/', include('apps.post.urls')),
 
     # Comment
-    path('backend/api/social/comments/', include('apps.comment.urls')),
+    path('social/comments/', include('apps.comment.urls')),
+]
+
+urlpatterns = [
+    path('backend/admin/', admin.site.urls),
+    path('backend/api/', include(api_patterns))
 ]
 
 # Serving static files during development
