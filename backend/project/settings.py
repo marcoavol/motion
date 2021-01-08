@@ -26,13 +26,22 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ast.literal_eval(os.getenv('DJANGO_DEBUG'))
 
-# SECURITY WARNING: restrict allowed hosts in production!
+# SECURITY: restrict allowed hosts in production
 PRODUCTION_HOSTS = [
     '138.68.96.201',
     'mv-motion.propulsion-learn.ch',
     'www.mv-motion.propulsion-learn.ch',
 ]
 ALLOWED_HOSTS = ['*'] if DEBUG else PRODUCTION_HOSTS
+
+# SECURITY: define SOP exceptions
+# https://pypi.org/project/django-cors-headers/#:~:text=django%2Dcors%2Dheaders%20is%20a,Origin%20Resource%20Sharing%20(CORS).
+CORS_ALLOWED_ORIGINS = [
+    'https://mv-motion.propulsion-learn.ch',
+    'https://www.mv-motion.propulsion-learn.ch',
+    'http://localhost:3000',
+    'http://0.0.0.0:8000/',
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -45,6 +54,7 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'rest_framework',
+    'corsheaders',
     'drf_yasg',
 
     # Own apps
@@ -59,8 +69,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',  # Used for session authentication
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
