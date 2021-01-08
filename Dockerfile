@@ -14,8 +14,9 @@ RUN curl -sL https://deb.nodesource.com/setup_13.x | bash - && apt-get install -
 RUN mkdir -p /backend
 COPY ./backend/requirements.yml /backend/requirements.yml
 RUN /opt/conda/bin/conda env create -f /backend/requirements.yml
-RUN echo 'source activate backend-env' >~/.bashrc
 ENV PATH /opt/conda/envs/backend-env/bin:$PATH
+RUN echo 'source activate backend-env' >~/.bashrc
+RUN pip install django-cors-headers
 
 RUN mkdir -p /scripts
 COPY ./scripts /scripts
