@@ -33,7 +33,7 @@ lint:
     - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.ci.yml run backend flake8 .
 
 push image:
-  stage: pus
+  stage: push
   only:
     - master
     - tag
