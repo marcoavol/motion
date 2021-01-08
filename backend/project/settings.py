@@ -32,7 +32,7 @@ PRODUCTION_HOSTS = [
     'mv-motion.propulsion-learn.ch',
     'www.mv-motion.propulsion-learn.ch',
 ]
-ALLOWED_HOSTS = PRODUCTION_HOSTS if DEBUG else ['*']
+ALLOWED_HOSTS = ['*'] if DEBUG else PRODUCTION_HOSTS
 
 # Application definition
 INSTALLED_APPS = [
