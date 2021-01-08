@@ -29,8 +29,8 @@ DEBUG = ast.literal_eval(os.getenv('DJANGO_DEBUG'))
 # SECURITY WARNING: restrict allowed hosts in production!
 PRODUCTION_HOSTS = [
     '138.68.96.201',
-    'mv-docker-deployment.propulsion-learn.ch',
-    'www.mv-docker-deployment.propulsion-learn.ch',
+    'mv-motion.propulsion-learn.ch',
+    'www.mv-motion.propulsion-learn.ch',
 ]
 ALLOWED_HOSTS = PRODUCTION_HOSTS if DEBUG else ['*']
 
