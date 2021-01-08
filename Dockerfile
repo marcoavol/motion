@@ -16,7 +16,6 @@ COPY ./backend/requirements.yml /backend/requirements.yml
 RUN /opt/conda/bin/conda env create -f /backend/requirements.yml
 ENV PATH /opt/conda/envs/backend-env/bin:$PATH
 RUN echo 'source activate backend-env' >~/.bashrc
-RUN pip install django-cors-headers
 
 RUN mkdir -p /scripts
 COPY ./scripts /scripts
