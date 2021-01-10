@@ -40,7 +40,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://mv-motion.propulsion-learn.ch',
     'https://www.mv-motion.propulsion-learn.ch',
     'http://localhost:3000',
-    'http://0.0.0.0:8000/',
+    'http://0.0.0.0:8000',
 ]
 
 # Application definition
