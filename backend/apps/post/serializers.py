@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Post, Post_Pic
 from ..comment.serializers import CommentSimpleSerializer
-from apps.user.serializers import NestedUserSerializer
+from ..user.serializers import NestedUserSerializer
 
 
 class PostSerializer(serializers.ModelSerializer):

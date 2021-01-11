@@ -1,8 +1,8 @@
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import ListCreateAPIView, ListAPIView
-from apps.comment.models import Comment
-from apps.comment.serializers import CommentSerializer
+from ..comment.models import Comment
+from ..comment.serializers import CommentSerializer
 
 
 # I get all comments and send comment/

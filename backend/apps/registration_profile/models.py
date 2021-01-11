@@ -1,7 +1,7 @@
 from django.db import models
+from django.conf import settings
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from apps.user.models import User
 from random import randint
 from django.core.validators import RegexValidator
 from django.core.mail import send_mail
@@ -16,7 +16,8 @@ def code_generator(length=CODE_LENGTH):
 
 
 class RegistrationProfile(models.Model):
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name="registration_profile",
+    user = models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                related_name="registration_profile",
                                 primary_key=True)
     code = models.CharField(default=code_generator, max_length=CODE_LENGTH,
                             validators=[CODE_VALIDATOR])
@@ -31,7 +32,7 @@ class RegistrationProfile(models.Model):
 
 # TODO: Handle signals in a signals.py file per backend?
 # Automatically create a registration profile for and send an email with the validation code to newly registered user
-@receiver(post_save, sender=User)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_registration_profile(sender, instance, **kwargs):
     profile, created = RegistrationProfile.objects.get_or_create(user=instance)
     if created:

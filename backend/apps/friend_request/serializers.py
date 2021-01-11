@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import FriendRequest
-from apps.user.serializers import NestedUserSerializer
+from ..user.serializers import NestedUserSerializer
 from django.db.models import Q
 
 
