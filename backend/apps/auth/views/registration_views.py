@@ -1,7 +1,7 @@
 from rest_framework import generics, response, status
 from django.contrib.auth import get_user_model
-from ..serializers import RegistrationSerializer, ValidationSerializer
-from ...user.serializers import PrivateUserSerializer
+from apps.auth.serializers.registration_serializers import RegistrationSerializer, ValidationSerializer
+from apps.user.serializers import PrivateUserSerializer
 from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
 

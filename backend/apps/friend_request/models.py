@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 # When referencing User in model files always use settings.AUTH_USER_MODEL
-# Use get_user_model from django.contrib.auth only in non-model files e.g. views
+# Use get_user_model from django.contrib.auth only in non-model files e.g. views, serializers, ...
 # See: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
 
 

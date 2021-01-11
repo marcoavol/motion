@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt import views as jwt_views
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -41,11 +40,9 @@ api_patterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     # Authentication
-    path('auth/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh'),
-    path('auth/registration/', include('apps.registration_profile.urls.registration_urls')),
-    path('auth/password-reset/', include('apps.registration_profile.urls.password_reset_urls')),
+    path('auth/token/', include('apps.auth.urls.token_urls')),
+    path('auth/registration/', include('apps.auth.urls.registration_urls')),
+    path('auth/password-reset/', include('apps.auth.urls.password_reset_urls')),
 
     # User
     path('users/', include('apps.user.urls.users_urls')),

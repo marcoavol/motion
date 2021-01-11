@@ -6,8 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('registration_profile', '0002_auto_20210104_1416'),
-        ('registration_profile', '0002_auto_20210104_1024'),
+        ('custom_auth', '0002_auto_20210104_1416'),
+        ('custom_auth', '0002_auto_20210104_1024'),
     ]
 
     operations = [

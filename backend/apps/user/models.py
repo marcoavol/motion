@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from ..friend_request.models import FriendRequest
+from apps.friend_request.models import FriendRequest
 
 
 # Save avatar to user specific directory in media files

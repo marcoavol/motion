@@ -1,9 +1,9 @@
 from rest_framework import generics
 from django.contrib.auth import get_user_model
-from ..serializers import PrivateUserSerializer
-from ...friend_request.models import FriendRequest
-from ...friend_request.serializers import FriendRequestSerializer
-from ..permissions import IsInvolved
+from apps.user.serializers import PrivateUserSerializer
+from apps.friend_request.models import FriendRequest
+from apps.friend_request.serializers import FriendRequestSerializer
+from apps.user.permissions import IsInvolved
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema, no_body
 

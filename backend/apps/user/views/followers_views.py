@@ -1,6 +1,6 @@
 from rest_framework import generics, response, status
 from django.contrib.auth import get_user_model
-from ..serializers import PublicUserSerializer, PrivateUserSerializer
+from apps.user.serializers import PublicUserSerializer, PrivateUserSerializer
 from drf_yasg.utils import swagger_auto_schema, no_body
 
 User = get_user_model()

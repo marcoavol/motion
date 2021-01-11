@@ -1,5 +1,5 @@
 from django.urls import path
-from ..views.friends_views import ListFriendsView, CreateFriendRequestView, ListFriendRequestsView, \
+from apps.user.views.friends_views import ListFriendsView, CreateFriendRequestView, ListFriendRequestsView, \
     RetrieveUpdateDestroyFriendRequestView
 
 urlpatterns = [

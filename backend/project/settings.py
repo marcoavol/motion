@@ -58,8 +58,8 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     # Own apps
+    'apps.auth.apps.AuthConfig',
     'apps.user',
-    'apps.registration_profile',
     'apps.hobby',
     'apps.post',
     'apps.comment',

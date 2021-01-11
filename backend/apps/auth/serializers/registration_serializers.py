@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, password_validation
 from uuid import uuid4
-from .models import CODE_LENGTH
+from apps.auth.models import CODE_LENGTH
 
 User = get_user_model()
 
@@ -61,13 +61,3 @@ class ValidationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'username', 'first_name', 'last_name', 'code', 'password', 'password_repeat']
-
-
-# TODO: Refactor and optimize password-reset handling
-class PasswordResetValidationSerializer(ValidationSerializer):
-    def validate(self, attrs):
-        return attrs
-
-    class Meta:
-        model = User
-        fields = ['email', 'code', 'password', 'password_repeat']
