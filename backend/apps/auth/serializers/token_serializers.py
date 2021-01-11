@@ -11,7 +11,7 @@ class TokenObtainSerializer(TokenObtainPairSerializer):
 
 
 # Only used for response in yasg docs
-class TokenReturnSerializer(TokenObtainSerializer):
+class TokenObtainResponseSerializer(TokenObtainSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
