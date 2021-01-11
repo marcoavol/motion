@@ -19,7 +19,7 @@ class PasswordResetView(generics.GenericAPIView):
     def get_object(self):
         return generics.get_object_or_404(User.objects.all(), email=self.request.data.get('email'))
 
-    @swagger_auto_schema(responses={204: "No Content"})
+    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: "No Content"})
     def post(self, request, *args, **kwargs):
         user = self.get_object()
         user.registration_profile.update_code()
@@ -43,7 +43,7 @@ class PasswordResetValidationView(generics.GenericAPIView):
     def get_object(self):
         return generics.get_object_or_404(User.objects.all(), email=self.request.data.get('email'))
 
-    @swagger_auto_schema(responses={204: "No Content"})
+    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: "No Content"})
     def patch(self, request, *args, **kwargs):
         serializer = self.get_serializer(self.get_object(), data=request.data)
         serializer.is_valid(raise_exception=True)

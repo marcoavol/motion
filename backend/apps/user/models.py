@@ -3,6 +3,11 @@ from django.contrib.auth.models import AbstractUser
 from apps.friend_request.models import FriendRequest
 
 
+# When referencing User in model files always use settings.AUTH_USER_MODEL
+# Use get_user_model from django.contrib.auth only in non-model files e.g. views, serializers, ...
+# See: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
+
+
 # Save avatar to user specific directory in media files
 def user_avatar_directory(instance, filename):
     return f'{instance.username}/avatar/{filename}'

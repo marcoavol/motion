@@ -16,7 +16,7 @@ class RegistrationView(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
     permission_classes = [AllowAny]
 
-    @swagger_auto_schema(responses={204: "No Content"})
+    @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: "No Content"})
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -34,7 +34,7 @@ class ValidationView(generics.GenericAPIView):
     def get_object(self):
         return generics.get_object_or_404(User.objects.all(), email=self.request.data.get('email'))
 
-    @swagger_auto_schema(responses={200: PrivateUserSerializer})
+    @swagger_auto_schema(responses={status.HTTP_200_OK: PrivateUserSerializer})
     def put(self, request, *args, **kwargs):
         serializer = self.get_serializer(self.get_object(), data=request.data)
         serializer.is_valid(raise_exception=True)
