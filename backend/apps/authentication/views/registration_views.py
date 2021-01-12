@@ -25,7 +25,7 @@ class RegistrationView(generics.GenericAPIView):
         return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ValidationView(generics.GenericAPIView):
+class RegistrationValidationView(generics.GenericAPIView):
     """
     Update an inactive user with the required info and activate the user.
     """

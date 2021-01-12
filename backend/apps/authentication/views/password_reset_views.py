@@ -37,7 +37,7 @@ class PasswordResetView(generics.GenericAPIView):
 
 class PasswordResetValidationView(generics.GenericAPIView):
     """
-    Update the user with the reset password.
+    Update the user with the new password.
     """
     serializer_class = PasswordResetValidationSerializer
     permission_classes = [AllowAny]
