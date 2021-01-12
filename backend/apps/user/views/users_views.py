@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from django.contrib.auth import get_user_model
-from apps.user.serializers import PublicUserSerializer, PrivateUserSerializer
+from apps.user.serializers.user_serializers import PublicUserSerializer, PrivateUserSerializer
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
 

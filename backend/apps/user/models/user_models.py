@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from apps.friend_request.models import FriendRequest
+from apps.user.models.friends_models import FriendRequest
 
 
 # When referencing User in model files always use settings.AUTH_USER_MODEL

@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'apps.hobby',
     'apps.post',
     'apps.comment',
-    'apps.friend_request',
 ]
 
 MIDDLEWARE = [

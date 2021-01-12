@@ -2,9 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from random import randint
-from django.core.validators import RegexValidator
 from django.core.mail import send_mail
+from django.core.validators import RegexValidator
+from random import randint
 
 CODE_LENGTH = 5
 CODE_VALIDATOR = RegexValidator(regex=f'^[0-9]{{{CODE_LENGTH}}}$',

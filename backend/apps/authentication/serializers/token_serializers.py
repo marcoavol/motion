@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from apps.user.serializers import PrivateUserSerializer
+from apps.user.serializers.user_serializers import PrivateUserSerializer
 
 
 class TokenObtainSerializer(TokenObtainPairSerializer):
