@@ -1,2 +1,2 @@
-from .user_models import User
-from .friends_models import FriendRequest
+from .user_models import User  # noqa: F401
+from .friends_models import FriendRequest  # noqa: F401
