@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.auth.models import RegistrationProfile
+from apps.authentication.models import RegistrationProfile
 
 
 @admin.register(RegistrationProfile)

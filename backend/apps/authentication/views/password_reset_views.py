@@ -1,8 +1,8 @@
 from rest_framework import generics, response, status
-from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
-from apps.auth.serializers.password_reset_serializers import PasswordResetValidationSerializer
+from apps.authentication.serializers.password_reset_serializers import PasswordResetValidationSerializer
 from rest_framework.permissions import AllowAny
+from django.core.mail import send_mail
 from drf_yasg.utils import swagger_auto_schema
 
 User = get_user_model()

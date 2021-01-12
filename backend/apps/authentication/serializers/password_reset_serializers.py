@@ -1,4 +1,4 @@
-from apps.auth.serializers.registration_serializers import ValidationSerializer
+from apps.authentication.serializers.registration_serializers import ValidationSerializer
 from django.contrib.auth import get_user_model
 
 User = get_user_model()

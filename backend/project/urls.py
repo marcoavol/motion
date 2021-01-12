@@ -16,10 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 from django.conf.urls.static import static
 from django.conf import settings
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 # Documentation configuration
 schema_view = get_schema_view(
@@ -40,9 +40,9 @@ api_patterns = [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     # Authentication
-    path('auth/token/', include('apps.auth.urls.token_urls')),
-    path('auth/registration/', include('apps.auth.urls.registration_urls')),
-    path('auth/password-reset/', include('apps.auth.urls.password_reset_urls')),
+    path('auth/token/', include('apps.authentication.urls.token_urls')),
+    path('auth/registration/', include('apps.authentication.urls.registration_urls')),
+    path('auth/password-reset/', include('apps.authentication.urls.password_reset_urls')),
 
     # User
     path('users/', include('apps.user.urls.users_urls')),
