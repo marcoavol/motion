@@ -15,7 +15,7 @@ const signUpReducer = (state = initialState, action) => {
     switch (action.type) {
         case SIGNUP_STEP: {
             const newState = {...state}
-            newState.step++
+            newState.step = action.step
             return newState
         }
         case USER_REGISTRATION: {

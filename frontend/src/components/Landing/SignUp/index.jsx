@@ -26,9 +26,9 @@ const SignUp = () => {
         setUserFeedback("")
         if (step === 1) {
             dispatch(userRegistration({email: e.target.elements.email.value}))
-            .then(result => result ? setUserFeedback(result.email) : dispatch(signUpStepAction(step + 1)))
+            .then(result => result ? setUserFeedback(result.email) : dispatch(signUpStepAction(2)))
         } else if (step === 2) {
-            dispatch(signUpStepAction(step + 1))
+            dispatch(signUpStepAction(3))
         } else {
             if (password !== passwordRepeat) {
                 setUserFeedback("Password repeat not matching")
