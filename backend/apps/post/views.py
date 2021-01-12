@@ -1,26 +1,8 @@
-from rest_framework.generics import ListAPIView
+from rest_framework import generics, response
 from .models import Post, Post_Pic
 from .serializers import PostSerializer, LikeSerializer, PostPicSerializer
-from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
-
-
-# Create your views here.
-
-# class ListPostsView(View):
-#
-#     def get(self, request, *args, **kwargs):
-#         posts = Post.objects.all()
-#         response = [{'id': post.id, 'content': post.content} for
-#                     post in posts]
-#         return JsonResponse(response, safe=False)
-
-@api_view(['GET'])
-def apiOverview(request):
-    return Response("API BASE POINT", safe=False)
 
 
 class PostList(generics.ListCreateAPIView):
@@ -88,7 +70,7 @@ class LikePost(generics.UpdateAPIView):
             post.liked_by.remove(user)
         else:
             post.liked_by.add(user)
-        return Response(self.get_serializer(post).data)
+        return response.Response(self.get_serializer(post).data)
 
 
 class ListLikedPost(generics.ListAPIView):
@@ -112,7 +94,7 @@ class PostPicView(generics.ListCreateAPIView):
     serializer_class = PostPicSerializer
 
 
-class MyFollowersPosts(ListAPIView):
+class MyFollowersPosts(generics.ListAPIView):
     """
     Get posts from all followers
     """
@@ -124,7 +106,7 @@ class MyFollowersPosts(ListAPIView):
         return posts
 
 
-class MyFriendsPosts(ListAPIView):
+class MyFriendsPosts(generics.ListAPIView):
     """
     Get posts from all friends
     """

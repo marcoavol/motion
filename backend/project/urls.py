@@ -49,14 +49,14 @@ api_patterns = [
     path('social/followers/', include('apps.user.urls.followers_urls')),
     path('social/friends/', include('apps.user.urls.friends_urls')),
 
-    # Hobby
-    path('hobbies/', include('apps.hobby.urls')),
-
     # Post
     path('social/posts/', include('apps.post.urls')),
 
     # Comment
     path('social/comments/', include('apps.comment.urls')),
+
+    # Hobby
+    path('hobbies/', include('apps.hobby.urls')),
 ]
 
 urlpatterns = [
