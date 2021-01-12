@@ -1,6 +1,7 @@
 from rest_framework import generics, response, status
 from django.contrib.auth import get_user_model
-from apps.authentication.serializers.password_reset_serializers import PasswordResetValidationSerializer
+from apps.authentication.serializers.password_reset_serializers import PasswordResetSerializer, \
+    PasswordResetValidationSerializer
 from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
 from drf_yasg.utils import swagger_auto_schema
@@ -14,6 +15,7 @@ class PasswordResetView(generics.GenericAPIView):
     """
     Send the user an email with a password reset code.
     """
+    serializer_class = PasswordResetSerializer
     permission_classes = [AllowAny]
 
     def get_object(self):
