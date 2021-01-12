@@ -50,7 +50,7 @@ export const userValidation = (data) => async (dispatch, getState) => {
     })
     const body = JSON.stringify(data)
     const config = {
-        method: "PATCH",
+        method: "PUT",
         headers: headers,
         body: body,
     }
