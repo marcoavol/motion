@@ -22,7 +22,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields = ['email']
 
 
-class ValidationSerializer(serializers.ModelSerializer):
+class RegistrationValidationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=128, validators=[password_validation.validate_password])
     password_repeat = serializers.CharField(max_length=128, validators=[password_validation.validate_password])
     code = serializers.CharField()

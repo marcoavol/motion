@@ -1,6 +1,7 @@
 from rest_framework import generics, response, status
 from django.contrib.auth import get_user_model
-from apps.authentication.serializers.password_reset_serializers import PasswordResetValidationSerializer
+from apps.authentication.serializers.password_reset_serializers import PasswordResetSerializer, \
+    PasswordResetValidationSerializer
 from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
 from drf_yasg.utils import swagger_auto_schema
@@ -14,6 +15,7 @@ class PasswordResetView(generics.GenericAPIView):
     """
     Send the user an email with a password reset code.
     """
+    serializer_class = PasswordResetSerializer
     permission_classes = [AllowAny]
 
     def get_object(self):
@@ -35,7 +37,7 @@ class PasswordResetView(generics.GenericAPIView):
 
 class PasswordResetValidationView(generics.GenericAPIView):
     """
-    Update the user with the reset password.
+    Update the user with the new password.
     """
     serializer_class = PasswordResetValidationSerializer
     permission_classes = [AllowAny]
@@ -45,8 +47,9 @@ class PasswordResetValidationView(generics.GenericAPIView):
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: "No Content"})
     def patch(self, request, *args, **kwargs):
-        serializer = self.get_serializer(self.get_object(), data=request.data)
+        user = self.get_object()
+        serializer = self.get_serializer(user, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        self.get_object().registration_profile.update_code()
+        user.registration_profile.update_code()
         return response.Response(status=status.HTTP_204_NO_CONTENT)

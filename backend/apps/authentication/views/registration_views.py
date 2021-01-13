@@ -1,6 +1,7 @@
 from rest_framework import generics, response, status
 from django.contrib.auth import get_user_model
-from apps.authentication.serializers.registration_serializers import RegistrationSerializer, ValidationSerializer
+from apps.authentication.serializers.registration_serializers import RegistrationSerializer, \
+    RegistrationValidationSerializer
 from apps.user.serializers.user_serializers import PrivateUserSerializer
 from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
@@ -24,11 +25,11 @@ class RegistrationView(generics.GenericAPIView):
         return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ValidationView(generics.GenericAPIView):
+class RegistrationValidationView(generics.GenericAPIView):
     """
     Update an inactive user with the required info and activate the user.
     """
-    serializer_class = ValidationSerializer
+    serializer_class = RegistrationValidationSerializer
     permission_classes = [AllowAny]
 
     def get_object(self):
