@@ -1,12 +1,34 @@
 from django.contrib import admin
-from .models import Post, Post_Pic
+from apps.post.models import Post, PostImage
 
 
+class PostImageAdmin(admin.TabularInline):
+    model = PostImage
+    extra = 0
+
+
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['user', 'content', 'created']
-    search_fields = ['user', 'content']
-    list_filter = ['user']
+    inlines = [PostImageAdmin]
+    readonly_fields = ['created']
 
+    # fields shown when creating a new instance
+    add_fieldsets = [
+        (None, {
+            'classes': ['wide'],
+            'fields': ['user', 'content'],
+        })
+    ]
 
-admin.site.register(Post, PostAdmin)
-admin.site.register(Post_Pic)
+    # fields shown when reading / updating an instance
+    fieldsets = [
+        (None, {
+            'fields': ['user', 'content', 'created']
+        })
+    ]
+
+    # fields shown when looking at a list of instances
+    list_display = ['user', 'content']
+    list_filter = ['user', 'created']
+
+    ordering = ['user']

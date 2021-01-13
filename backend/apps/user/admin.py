@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
-from .models.friends_models import FriendRequest
+from apps.user.models.friends_models import FriendRequest
 
 User = get_user_model()
 

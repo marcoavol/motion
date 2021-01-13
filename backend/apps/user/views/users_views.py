@@ -9,13 +9,13 @@ User = get_user_model()
 
 class ListUsersView(ListAPIView):
     """
-    List all users. Filter with (chainable) query parameters of pattern \\<attribute>__<lookup_name>=\\<value>.
+    List all active users. Filter with (chainable) query parameters of pattern \\<attribute>__<lookup_name>=\\<value>.
     """
     serializer_class = PublicUserSerializer
 
     # Allows dynamic filtering for all public fields with multiple query parameters supporting lookups
     def get_queryset(self):
-        queryset = User.objects.all()
+        queryset = User.objects.exclude(is_active=False)
         queryparams = self.request.query_params
         for key in queryparams.keys():
             attr = key.split('__')[0]
@@ -30,9 +30,9 @@ class ListUsersView(ListAPIView):
 @method_decorator(name='get', decorator=swagger_auto_schema(responses={200: PublicUserSerializer}))
 class RetrieveUserView(RetrieveAPIView):
     """
-    Retrieve a user.
+    Retrieve an active user.
     """
-    queryset = User
+    queryset = User.objects.exclude(is_active=False)
     lookup_url_kwarg = 'user_id'
 
     # TODO: Somehow implement friend-check as reusable permission/mixin

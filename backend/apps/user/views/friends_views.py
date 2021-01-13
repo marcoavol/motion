@@ -23,16 +23,16 @@ class ListFriendsView(generics.ListAPIView):
 @method_decorator(name='post', decorator=swagger_auto_schema(request_body=no_body))
 class CreateFriendRequestView(generics.CreateAPIView):
     """
-    Create a new pending friend request.
+    Create a new pending friend request between logged-in user and another active user.
     """
     queryset = FriendRequest
     serializer_class = FriendRequestSerializer
     lookup_url_kwarg = 'user_id'
 
-    # Set requester to logged-in user and receiver to user with user_id passed as URL path parameter
+    # Set requester to logged-in user and receiver to (active) user with user_id passed as URL path parameter
     def perform_create(self, serializer):
         requester = self.request.user
-        receiver = generics.get_object_or_404(User.objects.all(), id=self.kwargs.get('user_id'))
+        receiver = generics.get_object_or_404(User.objects.exclude(is_active=False), id=self.kwargs.get('user_id'))
         serializer.save(requester=requester, receiver=receiver, status=0)
 
 

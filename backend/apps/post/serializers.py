@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Post_Pic
+from .models import Post, PostImage
 from ..comment.serializers import CommentSimpleSerializer
 from apps.user.serializers.user_serializers import NestedUserSerializer
 
@@ -27,7 +27,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
 class PostPicSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post_Pic
+        model = PostImage
         fields = '__all__'
 
 

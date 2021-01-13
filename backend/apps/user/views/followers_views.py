@@ -28,9 +28,9 @@ class ListFolloweesView(generics.ListAPIView):
 
 class ToggleFollowView(generics.GenericAPIView):
     """
-     Toggle follow/unfollow a user.
+     Toggle follow/unfollow between the logged-in user and another active user.
      """
-    queryset = User
+    queryset = User.objects.exclude(is_active=False)
     serializer_class = PrivateUserSerializer
     lookup_url_kwarg = 'user_id'
 

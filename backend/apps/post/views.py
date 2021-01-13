@@ -1,5 +1,5 @@
 from rest_framework import generics, response
-from .models import Post, Post_Pic
+from .models import Post, PostImage
 from .serializers import PostSerializer, LikeSerializer, PostPicSerializer
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
@@ -90,7 +90,7 @@ class PostPicView(generics.ListCreateAPIView):
     """
     List / Add a Picture to a Post
     """
-    queryset = Post_Pic.objects.all()
+    queryset = PostImage.objects.all()
     serializer_class = PostPicSerializer
 
 
