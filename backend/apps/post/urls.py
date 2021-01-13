@@ -2,7 +2,7 @@ from django.urls import path
 from apps.post.views import *
 
 urlpatterns = [
-    path('', PostList.as_view()),
+    path('', ListCreatePostsView.as_view()),
     # path('<int:pk>/', views.PostDetail.as_view()),
     # path('toggle-like/<int:pk>/', views.LikePost.as_view()),
     # path('user/', views.ListUsersPost.as_view()),

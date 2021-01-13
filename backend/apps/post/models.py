@@ -8,10 +8,10 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     liked_by = models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
 
-    # images - ForeignKey field defined in PostImage model
-    # comments - ManyToMany field defined in Comment model
     # TODO: shared
     # TODO: sharing
+    # images - ForeignKey field defined in PostImage model
+    # comments - ManyToMany field defined in Comment model
 
     def __str__(self):
         return f'Post {self.id} ({self.user})'

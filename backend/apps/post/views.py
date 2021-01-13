@@ -1,16 +1,28 @@
 from rest_framework import generics, response
-from .models import Post, PostImage
-from .serializers import PostSerializer, LikeSerializer, PostPicSerializer
+from apps.post.models import Post, PostImage
+from apps.post.serializers import PostSerializer, LikeSerializer, PostPicSerializer
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
 
-IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
-
-class PostList(generics.ListCreateAPIView):
-    """
-    List Posts for all users / Create a post for logged in user
-    """
-    queryset = Post.objects.all()
+@method_decorator(name='get', decorator=swagger_auto_schema(operation_description='List all posts.'))
+@method_decorator(name='post',
+                  decorator=swagger_auto_schema(operation_description='Create a new post for the logged-in user.'))
+class ListCreatePostsView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
+
+    # Allows dynamic filtering for all fields with multiple query parameters supporting lookups
+    def get_queryset(self):
+        queryset = Post.objects.all()
+        queryparams = self.request.query_params
+        for key in queryparams.keys():
+            attr = key.split('__')[0]
+            if hasattr(Post, attr) and attr in ['id', 'user', 'content', 'created']:
+                query = {f'{key}': queryparams.get(key)}
+                queryset = queryset.filter(**query)
+            else:
+                return []
+        return queryset.order_by('-created')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
