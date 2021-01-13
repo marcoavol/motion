@@ -28,9 +28,10 @@ schema_view = get_schema_view(
         default_version='v1',
         description="Django Motion Assignment",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="learn@propulsionacademy.com"),
+        contact=openapi.Contact(email="propulsion.academy@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
+    url='https://mv-motion.propulsion-learn.ch/backend/api/',
     public=True,  # Set to False to restrict access to protected endpoints
     permission_classes=(permissions.AllowAny,)  # Permissions for docs access
 )

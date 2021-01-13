@@ -47,8 +47,9 @@ class PasswordResetValidationView(generics.GenericAPIView):
 
     @swagger_auto_schema(responses={status.HTTP_204_NO_CONTENT: "No Content"})
     def patch(self, request, *args, **kwargs):
-        serializer = self.get_serializer(self.get_object(), data=request.data)
+        user = self.get_object()
+        serializer = self.get_serializer(user, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        self.get_object().registration_profile.update_code()
+        user.registration_profile.update_code()
         return response.Response(status=status.HTTP_204_NO_CONTENT)
