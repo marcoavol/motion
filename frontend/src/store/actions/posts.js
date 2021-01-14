@@ -1,4 +1,4 @@
-import { POSTS_FILTER, POSTS_FETCH, POST_LIKE_TOGGLE } from "../actionTypes"
+import { POSTS_FILTER, POSTS_FETCH } from "../actionTypes"
 import { baseURL } from "../constants"
 
 export const postsFilterAction = (filter) => {
@@ -35,13 +35,6 @@ export const postsFetch = (filter) => async (dispatch, getState) => {
     return json
 }
 
-const postLikeToggleAction = (id) => {
-    return {
-        type: POST_LIKE_TOGGLE,
-        id: id,
-    }
-}
-
 export const postLikeToggle = (id) => async (dispatch, getState) => {
     const accessToken = getState().sessionReducer.accessToken
     const headers = {
@@ -53,11 +46,10 @@ export const postLikeToggle = (id) => async (dispatch, getState) => {
     }
 
     const response = await fetch(`${baseURL}/social/posts/toggle-like/${id}/`, config)
-    const json = await response.json()
-
     if (response.ok) {
-        dispatch(postLikeToggleAction(id))
+        const json = await response.json()
+        return json
     }
     
-    return json
+    return null
 }

@@ -12,9 +12,9 @@ import { userSignInAction } from "./store/actions/signIn"
 let authorized = false
 const currentUserString = localStorage.getItem("currentUser")
 if (currentUserString) {
-  authorized = true
-  const currentUser = JSON.parse(currentUserString)
-  store.dispatch(userSignInAction(currentUser.user, currentUser.access, true))
+    authorized = true
+    const currentUser = JSON.parse(currentUserString)
+    store.dispatch(userSignInAction(currentUser.user, currentUser.access, true))
 }
 
 ReactDOM.render(

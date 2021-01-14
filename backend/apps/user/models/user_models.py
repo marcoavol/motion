@@ -29,7 +29,7 @@ class User(AbstractUser):
     country = models.CharField(max_length=150, blank=True, null=True)
     city = models.CharField(max_length=150, blank=True, null=True)
     about = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(upload_to=user_avatar_directory, default='default_images/avatar.png')
+    avatar = models.ImageField(upload_to=user_avatar_directory, blank=True, null=True)
     followers = models.ManyToManyField(to='self', symmetrical=False, related_name='followees', blank=True)
 
     # registration_profile - ForeignKey field defined in RegistrationProfile model

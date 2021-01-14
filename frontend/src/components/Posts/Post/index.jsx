@@ -1,22 +1,27 @@
-import {Link} from "react-router-dom"
-import {PostContainerStyled} from "./styles"
-import {ButtonStyled, ButtonRoundStyled} from "../../../styles/buttons"
+import { Link } from "react-router-dom"
+import { PostContainerStyled } from "./styles"
+import { ButtonStyled, ButtonRoundStyled } from "../../../styles/buttons"
 import menuIcon from "../../../assets/icons/menu.png"
 import unheartIcon from "../../../assets/icons/unheart.png"
 import heartIcon from "../../../assets/icons/heart.png"
 import shareIcon from "../../../assets/icons/share.png"
 import overlay from "../../../assets/overlay.png"
-import {useDispatch, useSelector} from "react-redux"
-import {postLikeToggle} from "../../../store/actions/posts"
+import { getAvatar } from "../../../utils.js"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { postLikeToggle } from "../../../store/actions/posts"
 
 const Post = (props) => {
     const dispatch = useDispatch()
+    const [post, setPost] = useState(props.post)
 
     const likeHandler = (id) => {
-        if (!id) {
-            return
-        } //TODO: Remove when not used anymore
         dispatch(postLikeToggle(id))
+            .then(result => {
+                if (result) {
+                    setPost(result)
+                }
+            })
     }
 
     const shareHandler = (e) => {
@@ -49,25 +54,24 @@ const Post = (props) => {
     return (
         <PostContainerStyled>
             <header>
-                <Link to="/profile"><ButtonRoundStyled><img src={props.user.avatar}
-                                                            alt="Avatar"/></ButtonRoundStyled></Link>
+                <Link to="/profile"><ButtonRoundStyled><img src={getAvatar(post.user)} alt="Avatar"/></ButtonRoundStyled></Link>
                 <div id="info-div">
-                    <p>{`${props.user.first_name} ${props.user.last_name}`}</p>
-                    <p id="timestamp">{getTimestamp(props.timestamp)}</p>
+                    <p>{`${post.user.first_name} ${post.user.last_name}`}</p>
+                    <p id="timestamp">{getTimestamp(post.created)}</p>
                 </div>
                 <ButtonStyled id="menu-btn"><img src={menuIcon} alt="Menu icon"/></ButtonStyled>
             </header>
-            <p id="text">{props.text}</p>
-            {props.images.length ?
+            <p id="text">{post.content}</p>
+            {post.images.length ?
                 <div id="image-container">
-                    {props.images.map((image, index) => {
-                        if (props.images.length <= 4 || index < 3) {
-                            return <button key={index} style={{"backgroundImage": `url(${image})`}}
-                                           onClick={imageViewHandler}/>
+                    {post.images.map((image, index) => {
+                        if (post.images.length <= 4 || index < 3) {
+                            return <button key={index} style={{"backgroundImage": `url(${image})`}} onClick={imageViewHandler} />
                         } else if (index === 3) {
-                            return <button key={index} style={{"backgroundImage": `url(${image})`}}
-                                           onClick={imageViewHandler}><img src={overlay} alt="Overlay"/>
-                                <p>{`+${props.images.length - 4}`}</p></button>
+                            return <button key={index} style={{"backgroundImage": `url(${image})`}} onClick={imageViewHandler}>
+                                <img src={overlay} alt="Overlay"/>
+                                <p>{`+${post.images.length - 4}`}</p>
+                            </button>
                         } else {
                             return null
                         }
@@ -76,11 +80,15 @@ const Post = (props) => {
                 : null
             }
             <footer>
-                <ButtonStyled className={`reaction-btn ${props.liked ? "liked" : ""}`}
-                              onClick={() => likeHandler(props.id)}><img src={props.liked ? heartIcon : unheartIcon}
-                                                                         alt="Like button"/>Like</ButtonStyled>
-                <ButtonStyled className="reaction-btn" onClick={shareHandler}><img src={shareIcon} alt="Share button"/>Share</ButtonStyled>
-                <p>{`${props.likes} likes`}</p>
+                <ButtonStyled className={`reaction-btn ${post.liked_by.map(user => user.id).includes(props.currentUser.id) ? "liked" : ""}`} onClick={() => likeHandler(post.id)}>
+                    <img src={post.liked_by.map(user => user.id).includes(props.currentUser.id) ? heartIcon : unheartIcon} alt="Like button"/>
+                    Like
+                </ButtonStyled>
+                <ButtonStyled className="reaction-btn" onClick={shareHandler}>
+                    <img src={shareIcon} alt="Share button"/>
+                    Share
+                </ButtonStyled>
+                <p>{`${post.liked_by.length} likes`}</p>
             </footer>
         </PostContainerStyled>
     )

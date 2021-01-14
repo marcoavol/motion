@@ -1,8 +1,8 @@
-from rest_framework import generics, response
+from rest_framework import generics, response, status
 from apps.post.models import Post, PostImage
 from apps.post.serializers import PostSerializer, LikeSerializer, PostPicSerializer
 from django.utils.decorators import method_decorator
-from drf_yasg.utils import swagger_auto_schema
+from drf_yasg.utils import swagger_auto_schema, no_body
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(operation_description='List all posts.'))
@@ -25,15 +25,19 @@ class ListCreatePostsView(generics.ListCreateAPIView):
         return queryset.order_by('-created')
 
     def perform_create(self, serializer):
+        # TODO: Implement image upload
         serializer.save(user=self.request.user)
 
 
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Show / Update / Delete one Post
-    """
-    queryset = Post.objects.all()
+@method_decorator(name='get', decorator=swagger_auto_schema(operation_description='Retrieve a post.'))
+@method_decorator(name='put',
+                  decorator=swagger_auto_schema(operation_description='Update a post of the logged-in user.'))
+@method_decorator(name='patch',
+                  decorator=swagger_auto_schema(operation_description='Partially update a post of the logged-in user.'))
+class RetrieveUpdateDestroyPostView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post
     serializer_class = PostSerializer
+    lookup_url_kwarg = 'post_id'
 
 
 class ListUsersPost(generics.ListAPIView):
@@ -61,28 +65,26 @@ class ListOtherUserPosts(generics.ListAPIView):
         return Post.objects.filter(user=id)
 
 
-class LikePost(generics.UpdateAPIView):
+class ToggleLikeView(generics.GenericAPIView):
     """
-    Like / Unlike  a Post
+    Toggle like/dislike of a post for logged-in user.
     """
-    # I am trying to prevent the user to like himself
-    # this works but I believe it is a validation and belongs to the
-    # serializer
-    # permission_classes = [IsNotPostUser]
-
     queryset = Post.objects.all()
-    serializer_class = LikeSerializer
+    serializer_class = PostSerializer
+    lookup_url_kwarg = 'post_id'
 
-    def perform_update(self, serializer):
+    @swagger_auto_schema(request_body=no_body)
+    def post(self, request, *args, **kwargs):
         post = self.get_object()
         user = self.request.user
-        # TODO check if the post was liked by this user already
-        user_liked_post = user in post.liked_by.all()
-        if user_liked_post:
+        if post.user == user:
+            return response.Response(data={'detail': 'User is not allowed to like his/her own post.'},
+                                     status=status.HTTP_403_FORBIDDEN)
+        if user in post.liked_by.all():
             post.liked_by.remove(user)
         else:
             post.liked_by.add(user)
-        return response.Response(self.get_serializer(post).data)
+        return response.Response(data=self.get_serializer(post).data, status=status.HTTP_201_CREATED)
 
 
 class ListLikedPost(generics.ListAPIView):

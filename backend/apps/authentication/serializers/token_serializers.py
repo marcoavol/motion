@@ -9,6 +9,7 @@ User = get_user_model()
 class TokenObtainSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
+        # Add context to nested serializer to get full avatar url
         data['user'] = PrivateUserSerializer(self.user, context=self.context).data
         return data
 

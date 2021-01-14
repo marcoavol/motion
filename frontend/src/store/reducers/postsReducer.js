@@ -1,4 +1,4 @@
-import { POSTS_FILTER, POSTS_FETCH, POST_LIKE_TOGGLE } from "../actionTypes"
+import { POSTS_FILTER, POSTS_FETCH } from "../actionTypes"
 
 const initialState = {
     postsFilter: "",
@@ -15,17 +15,6 @@ const postsReducer = (state = initialState, action) => {
         case POSTS_FETCH: {
             const newState = {...state}
             newState.postsAll = action.posts
-            return newState
-        }
-        case POST_LIKE_TOGGLE: {
-            const newState = {...state}
-            newState.postsAll = newState.postsAll.map(post => { 
-                if (post.id === action.id) {
-                    post.logged_in_user_liked = !post.logged_in_user_liked
-                    post.amount_of_likes = post.logged_in_user_liked ? post.amount_of_likes + 1 : post.amount_of_likes - 1
-                }
-                return post
-            })
             return newState
         }
         default:

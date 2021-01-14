@@ -11,10 +11,16 @@ class NestedUserSerializer(serializers.ModelSerializer):
         ref_name = None  # Prevents yasg docs from displaying 'NestedUser' as model name for nested user fields
 
 
+class PublicUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = User.PUBLIC_FIELDS
+
+
 class PrivateUserSerializer(serializers.ModelSerializer):
-    followers = NestedUserSerializer(many=True, read_only=True)
-    followees = NestedUserSerializer(many=True, read_only=True)
-    friends = NestedUserSerializer(many=True, read_only=True)
+    followers = PublicUserSerializer(many=True, read_only=True)
+    followees = PublicUserSerializer(many=True, read_only=True)
+    friends = PublicUserSerializer(many=True, read_only=True)
 
     # TODO: Add hobbies (and posts, liked_posts, comments?) field once implemented on each of the models
     class Meta:
@@ -23,7 +29,4 @@ class PrivateUserSerializer(serializers.ModelSerializer):
                   'followers', 'followees', 'friends']
 
 
-class PublicUserSerializer(PrivateUserSerializer):
-    class Meta:
-        model = User
-        fields = User.PUBLIC_FIELDS
+
