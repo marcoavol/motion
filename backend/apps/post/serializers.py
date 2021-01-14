@@ -1,19 +1,25 @@
 from rest_framework import serializers
 from apps.post.models import Post, PostImage
-from apps.user.serializers.user_serializers import NestedUserSerializer
+from apps.user.serializers.user_serializers import PublicUserSerializer
 from apps.comment.serializers import CommentSimpleSerializer
 
 
 # TODO: Add shared and sharing fields where appropriate once implemented
 
+class PostImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostImage
+        fields = ['image']
+
 
 class PostSerializer(serializers.ModelSerializer):
-    user = NestedUserSerializer(read_only=True)
+    user = PublicUserSerializer(read_only=True)
     images = serializers.SerializerMethodField()
     comments = CommentSimpleSerializer(many=True, read_only=True)
 
     def get_images(self, obj):
-        return [instance.image.url for instance in obj.images.all()]
+        return [PostImageSerializer(post_image, context=self.context).data.get('image') for post_image in
+                obj.images.all()]
 
     class Meta:
         model = Post

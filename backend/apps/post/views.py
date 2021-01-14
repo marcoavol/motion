@@ -11,7 +11,7 @@ from drf_yasg.utils import swagger_auto_schema
 class ListCreatePostsView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
 
-    # Allows dynamic filtering for all fields with multiple query parameters supporting lookups
+    # Allows dynamic filtering for specified fields with multiple query parameters supporting django field lookups
     def get_queryset(self):
         queryset = Post.objects.all()
         queryparams = self.request.query_params

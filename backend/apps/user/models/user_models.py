@@ -21,7 +21,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     # Fields that shall be treated as public and can be exposed to all logged-in users
-    PUBLIC_FIELDS = ('id', 'username', 'first_name', 'last_name', 'country')
+    PUBLIC_FIELDS = ('id', 'username', 'first_name', 'last_name', 'country', 'avatar')
 
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=150)
@@ -29,7 +29,7 @@ class User(AbstractUser):
     country = models.CharField(max_length=150, blank=True, null=True)
     city = models.CharField(max_length=150, blank=True, null=True)
     about = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(upload_to=user_avatar_directory, blank=True, null=True)
+    avatar = models.ImageField(upload_to=user_avatar_directory, default='default_images/avatar.png')
     followers = models.ManyToManyField(to='self', symmetrical=False, related_name='followees', blank=True)
 
     # registration_profile - ForeignKey field defined in RegistrationProfile model

@@ -62,7 +62,7 @@ api_patterns = [
 
 urlpatterns = [
     path('backend/admin/', admin.site.urls),
-    path('backend/api/', include(api_patterns))
+    path('backend/api/', include(api_patterns)),
 ]
 
 # Serving static files during development

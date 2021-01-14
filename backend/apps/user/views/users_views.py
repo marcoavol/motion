@@ -13,7 +13,7 @@ class ListUsersView(ListAPIView):
     """
     serializer_class = PublicUserSerializer
 
-    # Allows dynamic filtering for all public fields with multiple query parameters supporting lookups
+    # Allows dynamic filtering for all public fields with multiple query parameters supporting django field lookups
     def get_queryset(self):
         queryset = User.objects.exclude(is_active=False)
         queryparams = self.request.query_params
