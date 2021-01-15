@@ -9,7 +9,7 @@ import overlay from "../../../assets/overlay.png"
 import { getAvatar } from "../../../utils.js"
 import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import {postLikeToggle, postsFetch} from "../../../store/actions/posts"
+import { postLikeToggle } from "../../../store/actions/posts"
 
 const Post = (props) => {
     const dispatch = useDispatch()

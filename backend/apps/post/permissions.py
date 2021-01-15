@@ -1,11 +1,7 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission
 
 
-class IsNotPostUser(permissions.BasePermission):
-    """
-    Custom permission to only allow other users to like a post
-    """
-
+# Check if current user is author of a post
+class IsAuthor(BasePermission):
     def has_object_permission(self, request, view, obj):
-        # Like permission is only allowed to another user
-        return obj.user != request.user
+        return request.user == obj.user
