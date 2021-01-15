@@ -2,7 +2,7 @@ import { POSTS_FILTER, POSTS_FETCH } from "../actionTypes"
 
 const initialState = {
     postsFilter: "",
-    postsAll: [],
+    postsList: [],
 }
 
 const postsReducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const postsReducer = (state = initialState, action) => {
         }
         case POSTS_FETCH: {
             const newState = {...state}
-            newState.postsAll = action.posts
+            newState.postsList = action.posts
             return newState
         }
         default:

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { HeaderContainerStyled } from "./styles"
 import searchIcon from "../../../assets/icons/search.png"
-import {postsFetch, postsFilterAction} from "../../../store/actions/posts"
+import { postsFilterAction } from "../../../store/actions/posts"
 import { useSelector, useDispatch } from "react-redux"
 
 const Header = () => {

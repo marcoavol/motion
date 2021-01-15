@@ -91,13 +91,10 @@ class ListLikedPost(generics.ListAPIView):
     """
     Show Posts the User liked
     """
-    # TODO order seems not to work
-    ordering = ['created']
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        user = self.request.user
-        return Post.objects.filter(liked_by=user)
+        return self.request.user.liked_posts.order_by('-created')
 
 
 class PostPicView(generics.ListCreateAPIView):

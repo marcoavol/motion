@@ -26,13 +26,13 @@ export const postsFetch = (filter) => async (dispatch, getState) => {
     }
 
     const response = await fetch(`${baseURL}/social/posts/${filter ? filter + "/" : ""}`, config)
-    const json = await response.json()
-
     if (response.ok) {
+        const json = await response.json()
         dispatch(postsFetchAction(json))
+        return json
     }
 
-    return json
+    return null
 }
 
 export const postLikeToggle = (id) => async (dispatch, getState) => {

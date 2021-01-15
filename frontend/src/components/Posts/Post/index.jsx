@@ -7,13 +7,16 @@ import heartIcon from "../../../assets/icons/heart.png"
 import shareIcon from "../../../assets/icons/share.png"
 import overlay from "../../../assets/overlay.png"
 import { getAvatar } from "../../../utils.js"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { postLikeToggle } from "../../../store/actions/posts"
+import {postLikeToggle, postsFetch} from "../../../store/actions/posts"
 
 const Post = (props) => {
     const dispatch = useDispatch()
     const [post, setPost] = useState(props.post)
+
+    // TODO: Find better solution to rerender post when filter changes!
+    useEffect(() => setPost(props.post), [props.post])
 
     const likeHandler = (id) => {
         dispatch(postLikeToggle(id))
