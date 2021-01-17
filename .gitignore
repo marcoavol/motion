@@ -1,3 +1,5 @@
 .idea/
 .DS_Store
+media-files/
+static-files/
 #envs/
