@@ -19,7 +19,7 @@ class UserAdmin(UserAdmin):
     ]
 
     # fields shown when reading / updating an instance
-    # TODO: Add hobbies to profile fields once implemented
+    # TODO: Add hobbies to profile fields once app refactored
     fieldsets = [
         ('Authentication', {'fields': ['email', 'password']}),
         ('Profile', {'fields': ['username', 'first_name', 'last_name', 'country', 'city', 'about', 'avatar']}),

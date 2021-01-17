@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from apps.user.models.friends_models import FriendRequest
-from apps.user.serializers.user_serializers import NestedUserSerializer
+from apps.user.serializers.user_serializers import PublicUserSerializer
 from django.db.models import Q
 
 
 class FriendRequestSerializer(serializers.ModelSerializer):
-    requester = NestedUserSerializer(read_only=True)
-    receiver = NestedUserSerializer(read_only=True)
+    requester = PublicUserSerializer(read_only=True)
+    receiver = PublicUserSerializer(read_only=True)
 
     # Makes sure receiver and requester are different users and record for these users doesn't already exist
     def validate(self, attrs):

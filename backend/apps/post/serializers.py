@@ -48,7 +48,7 @@ class PostSerializer(serializers.ModelSerializer):
             instance.images.all().delete()
 
         # If image files are present in request, create a PostImage instance for each image that is related to this post
-        uploaded_images = self.context.get('request').FILES.getlist('images')
+        uploaded_images = self.context.get('request').FILES.getlistlkj('images')
         if uploaded_images:
             for image in uploaded_images:
                 post_image = PostImage.objects.create(
