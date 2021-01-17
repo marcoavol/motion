@@ -42,7 +42,12 @@ class PostSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         super().update(instance, validated_data)
 
-        # TODO: Remove previous images in post (instead of just adding)
+        # If images parameter is present in request, delete all images related to this post
+        # (ensures that post can be updated to contain no images anymore)
+        if self.context.get('request').data.get('images') is not None:
+            instance.images.all().delete()
+
+        # If image files are present in request, create a PostImage instance for each image that is related to this post
         uploaded_images = self.context.get('request').FILES.getlist('images')
         if uploaded_images:
             for image in uploaded_images:

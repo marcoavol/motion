@@ -1,12 +1,16 @@
 from rest_framework import generics, response, status
 from apps.post.models import Post
+from django.contrib.auth import get_user_model
 from apps.post.serializers import PostSerializer
 from apps.post.permissions import IsAuthor
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema, no_body
 
+User = get_user_model()
 
-@method_decorator(name='get', decorator=swagger_auto_schema(operation_description='List all posts.'))
+
+@method_decorator(name='get', decorator=swagger_auto_schema(operation_description='''List all posts. \
+    Filter with (chainable) query parameters of pattern \\<attribute>__<lookup_name>=\\<value>.'''))
 @method_decorator(name='post',
                   decorator=swagger_auto_schema(operation_description='Create a new post for the logged-in user.'))
 class ListCreatePostsView(generics.ListCreateAPIView):
@@ -41,6 +45,38 @@ class RetrieveUpdateDestroyPostView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthor]
 
 
+class ListCurrentUsersPostsView(generics.ListAPIView):
+    """
+    List all posts from the logged-in user.
+    """
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return self.request.user.posts.order_by('-created')
+
+
+class ListUsersPostsView(generics.ListAPIView):
+    """
+    List all posts from an active user.
+    """
+    serializer_class = PostSerializer
+    lookup_url_kwarg = 'user_id'
+
+    def get_queryset(self):
+        user = generics.get_object_or_404(User.objects.exclude(is_active=False), id=self.kwargs.get('user_id'))
+        return user.posts.order_by('-created')
+
+
+class ListLikedPostsView(generics.ListAPIView):
+    """
+    List all posts the logged-in user likes.
+    """
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return self.request.user.liked_posts.order_by('-created')
+
+
 class ToggleLikeView(generics.GenericAPIView):
     """
     Toggle like/dislike of a post for logged-in user.
@@ -63,18 +99,6 @@ class ToggleLikeView(generics.GenericAPIView):
         return response.Response(data=self.get_serializer(post).data, status=status.HTTP_201_CREATED)
 
 
-class ListLikedPostsView(generics.ListAPIView):
-    """
-    List all posts the logged-in user likes.
-    """
-    serializer_class = PostSerializer
-
-    def get_queryset(self):
-        return self.request.user.liked_posts.order_by('-created')
-
-
-
-
 class ListFolloweesPostsView(generics.ListAPIView):
     """
     List all posts from users the logged-in user is following.
@@ -82,9 +106,7 @@ class ListFolloweesPostsView(generics.ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        followers_id = self.request.user.followers.all().values_list('id', flat=True)
-        posts = Post.objects.filter(user__in=followers_id).order_by('-created')
-        return posts
+        return Post.objects.filter(user__in=self.request.user.followees.all()).order_by('-created')
 
 
 class ListFriendsPostsView(generics.ListAPIView):
@@ -94,33 +116,4 @@ class ListFriendsPostsView(generics.ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        followers_id = self.request.user.friends().all().values_list('id', flat=True)
-        posts = Post.objects.filter(user__in=followers_id).order_by('-created')
-        return posts
-
-
-class ListUsersPost(generics.ListAPIView):
-    """
-    Show Posts of logged in User
-    """
-    # TODO order seems not to work
-    ordering = ['created']
-    serializer_class = PostSerializer
-
-    def get_queryset(self):
-        return Post.objects.filter(user=self.request.user)
-
-
-class ListOtherUserPosts(generics.ListAPIView):
-    """
-    Show Posts of logged in User
-    """
-    # TODO order seems not to work
-    ordering = ['created']
-    serializer_class = PostSerializer
-
-    def get_queryset(self):
-        id = self.kwargs.get('user_id')
-        return Post.objects.filter(user=id)
-
-
+        return Post.objects.filter(user__in=self.request.user.friends().all()).order_by('-created')
