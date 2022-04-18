@@ -26,4 +26,4 @@ Motion was a social media platform I worked on several times during the three mo
 
 ## Screenshots
 
-TO-DO
+TODO!
